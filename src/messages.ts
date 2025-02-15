@@ -16,6 +16,20 @@ const hello = async (roomId: string) => {
   );
 };
 
+const feedback = async (roomId: string) => {
+  sendMessage(
+    roomId,
+    `how was the event rate it on a scale of 1 to 5`
+  );
+};
+
+const greeting = async (roomId: string) => {
+  sendMessage(
+    roomId,
+    `welcome to the room`
+  );
+};
+
 const sendPersonRequest = (roomId: string, replyText: string) => {
   sendMessage(
     roomId,
@@ -97,6 +111,21 @@ const handleMessage = async (event) => {
     hello(room_id);
     return;
   }
+
+  if (message.includes("feedback")) {
+    feedback(room_id);
+    return;
+  }
+
 };
 
+const handlejoin = async (event) => {
+ // console.log(event, "event");
+ // console.log(event.type, "event type");
+  console.log(event.event.unsigned.membership, "event membership");
+  const { room_id } = event.event.room_id;
+  const {sender} = event.event.sender;
+    greeting(room_id);
+};
+export { handlejoin };
 export default handleMessage;
